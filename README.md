@@ -2,7 +2,9 @@
 **Predicting False Positives to Reduce Alert Fatigue**
 
 ## 📌 Project Overview
-Security Operations Centers (SOCs) are overwhelmed by thousands of alerts daily. This project uses the **Microsoft GUIDE dataset** to build a Machine Learning model that classifies incidents as `True Positive`, `False Positive`, or `Benign Positive`.
+Security Operations Centers (SOCs) are overwhelmed by thousands of alerts daily. To manage and respond effectively, they need alerts that are accurate and actionable. False positives not only exhaust analysts but also risk diverting their attention away from genuine threats, reducing the overall security posture of the organization.
+
+This project uses the **Microsoft GUIDE dataset** to build a Machine Learning model that classifies incidents as `True Positive`, `False Positive`, or `Benign Positive`.
 
 By accurately triaging alerts, we can help security analysts focus on real threats and ignore the "noise."
 
