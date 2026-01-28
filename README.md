@@ -22,6 +22,7 @@ The dataset contains millions of security events. Key steps taken in this projec
 ## 📂 Project Structure
 - `notebooks/`: Contains the Exploratory Data Analysis (EDA) and model prototyping.
 - `data/`: (Local only) Folder for storing the Large CSV files.
+- 'models/': Contains the exported train model and requirements.txt file 
 
 ## 🚀 How to Run
 1. **Clone the repo:** `git clone https://github.com/YOUR_USERNAME/security.git`
