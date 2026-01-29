@@ -38,6 +38,24 @@ The final training set was prepared using a stratified split to preserve class r
 * **Validation Strategy:** 80/20 train-test split with stratification.
 * **Feature Consistency:** A `features.json` schema is used by the FastAPI app to ensure the production API receives the exact same column order as the training phase.
 
+## 🔬 Model Selection & Optimization
+
+The goal was to find a model that balanced high precision (to avoid missing real threats) with speed. I conducted a comparative analysis of three architectures:
+
+| Model | Why it was tested | Result |
+| :--- | :--- | :--- |
+| **Logistic Regression** | Baseline for linear separability. | High speed, but struggled with complex patterns. |
+| **Random Forest** | To handle non-linear relationships. | Strong accuracy, but large model size. |
+| **XGBoost** | Gradient boosting for peak performance. | **Winner:** Best F1-score and efficiency. |
+
+### Hyperparameter Tuning (GridSearchCV)
+To prevent overfitting and ensure the model generalized well to unseen security data, I performed a **Grid Search** over the following parameters:
+* `learning_rate`: Optimized for stable convergence.
+* `max_depth`: Tuned to capture complex interactions without memorizing noise.
+* `n_estimators`: Balanced for performance and training time.
+
+This optimization significantly improved the model's ability to distinguish between **Benign Positives** and **True Positives**, which are often the most difficult classes to separate in SOC logs.
+
 ## 🛠️ Tech Stack
 - **Language:** Python 3.9
 - **Libraries:** Pandas, NumPy, Matplotlib, Seaborn, Scikit-Learn, XGBoost
