@@ -12,6 +12,20 @@ Instead of just a static notebook, this repository features a deployed Machine L
 
 By accurately triaging alerts, we can help security analysts focus on real threats and ignore the "noise."
 
+## 🛠️ Tech Stack
+- **Language:** Python 3.9
+- **Libraries:** Pandas, NumPy, Matplotlib, Seaborn, Scikit-Learn, XGBoost
+- **API Development:** FastAPI, Pydantic (Schema validation & Endpoint logic)
+- **DevOps:** Docker
+- **Testing:** cURL & Swagger UI (API verification)
+
+## 📂 Project Structure
+* `app.py`: The FastAPI communication layer.
+* `models/`: Serialized model files (`.pkl`) and feature definitions.
+* `notebooks/`: Exploratory Data Analysis and model selection.
+* `Dockerfile`: The recipe for the isolated Linux-based environment.
+* `requirements.txt`: Precise library versions for reproducibility.
+
 ## 📊 Data Science Methodology
 
 This project utilizes the **Microsoft GUIDE** dataset. The following steps were taken to transform ~13M raw security events into a deployable classifier.
@@ -56,19 +70,6 @@ To prevent overfitting and ensure the model generalized well to unseen security 
 
 This optimization significantly improved the model's ability to distinguish between **Benign Positives** and **True Positives**, which are often the most difficult classes to separate in SOC logs.
 
-## 🛠️ Tech Stack
-- **Language:** Python 3.9
-- **Libraries:** Pandas, NumPy, Matplotlib, Seaborn, Scikit-Learn, XGBoost
-- **API Development:** FastAPI, Pydantic (Schema validation & Endpoint logic)
-- **DevOps:** Docker
-- **Testing:** cURL & Swagger UI (API verification)
-
-## 📂 Project Structure
-* `app.py`: The FastAPI communication layer.
-* `models/`: Serialized model files (`.pkl`) and feature definitions.
-* `notebooks/`: Exploratory Data Analysis and model selection.
-* `Dockerfile`: The recipe for the isolated Linux-based environment.
-* `requirements.txt`: Precise library versions for reproducibility.
 
 ## 🚀 Deployment & Usage
 
