@@ -52,7 +52,7 @@ This project is containerized using **Docker** for consistent deployment across 
      curl -X 'POST' 'http://localhost:8000/predict' \
      -H 'Content-Type: application/json' \
      -d '{"features": {"DetectorId": 3, "hour": 14, "dow": 2, "is_weekend": 0, "OSFamily": 1, "CountryCode": 5}}' 
-
+   ```
    Expected Response: {"prediction":"TruePositive","confidence":0.89, ...}
 
 ## 📊 Impact & Future Work
