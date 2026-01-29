@@ -6,11 +6,9 @@ Security Operations Centers (SOCs) are plagued by alert fatigue. This project pr
 
 Instead of just a static notebook, this repository features a deployed Machine Learning API that classifies alerts into three categories:
 
-  True Positive (TP): Real threats requiring immediate action.
-
-  False Positive (FP): Benign activity misidentified as a threat.
-
-  Benign Positive (BP): Expected behavior that triggered an alert.
+  * **True Positive (TP):** Real threats requiring immediate action.
+  * **False Positive (FP):** Benign activity misidentified as a threat.
+  * **Benign Positive (BP):** Expected behavior that triggered an alert.
 
 By accurately triaging alerts, we can help security analysts focus on real threats and ignore the "noise."
 
@@ -43,15 +41,17 @@ This project is containerized using **Docker** for consistent deployment across 
    ```bash
    docker build -t alert-triage-api .
 2. **Run the container:**
+   ```bash
    docker run -p 8000:8000 alert-triage-api
 3. **Input alert features through UI:**
    Once the container is running, open your browser to: http://localhost:8000/docs
    You can use the Swagger UI to manually input alert features and see the model's confidence scores in real-time.
 4. **Verify with a request (cURL):**
    You can send alerts directly to the API using curl:
-   ''' curl -X 'POST' 'http://localhost:8000/predict' \
+   ```bash
+     curl -X 'POST' 'http://localhost:8000/predict' \
      -H 'Content-Type: application/json' \
-     -d '{"features": {"DetectorId": 3, "hour": 14, "dow": 2, "is_weekend": 0, "OSFamily": 1, "CountryCode": 5}}' '''
+     -d '{"features": {"DetectorId": 3, "hour": 14, "dow": 2, "is_weekend": 0, "OSFamily": 1, "CountryCode": 5}}' 
 
    Expected Response: {"prediction":"TruePositive","confidence":0.89, ...}
 
