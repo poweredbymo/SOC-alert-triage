@@ -12,11 +12,31 @@ Instead of just a static notebook, this repository features a deployed Machine L
 
 By accurately triaging alerts, we can help security analysts focus on real threats and ignore the "noise."
 
-## 📊 Dataset & Features
-The dataset contains millions of security events. Key steps taken in this project:
-- **Data Cleaning:** Handled high-cardinality features and dropped columns with >40% missing values (e.g., `MitreTechniques`, `ThreatFamily`).
-- **Feature Engineering:** Extracted `hour`, `day_of_week`, and `is_weekend` from timestamps to capture attacker behavior patterns.
-- **Handling Imbalance:** Analyzed the distribution of `IncidentGrade` (approx. 21% False Positives).
+## 📊 Data Science Methodology
+
+This project utilizes the **Microsoft GUIDE** dataset. The following steps were taken to transform ~13M raw security events into a deployable classifier.
+  
+### 1. Data Acquisition
+* **Source:** [Microsoft GUIDE Dataset (Kaggle)](https://www.kaggle.com/datasets/Microsoft/microsoft-security-incident-prediction) 
+* **Status:** Raw CSVs are excluded from this repo via `.gitignore` to maintain a lightweight footprint. Users should place `GUIDE_Train.csv` in a `/data` folder locally.
+
+### 2. Exploratory Data Analysis (EDA)
+Initial analysis revealed a significant class imbalance and high-cardinality features:
+* **Target Distribution:** Benign Positive (44%), True Positive (34%), False Positive (21%).
+* **Feature Pruning:** Dropped 10+ columns with >40% missing values (e.g., `MitreTechniques`, `ThreatFamily`, `SuspicionLevel`).
+* **Noise Reduction:** Removed unique identifiers like `OrgId` and `IncidentId` which provide no predictive power.
+
+### 3. Feature Engineering
+To capture attacker behavior patterns, several "Temporal Features" were derived from the raw `Timestamp`:
+* `hour`: The hour of the day (0-23) to identify "after-hours" anomalies.
+* `dow`: Day of the week (0-6).
+* `is_weekend`: Binary flag (1 if Sat/Sun) to detect weekend-specific spikes in malicious activity.
+
+### 4. Data Pipeline & Validation
+The final training set was prepared using a stratified split to preserve class ratios:
+* **Numeric Encoding:** Categorical targets mapped to `0 (FalsePositive)`, `1 (BenignPositive)`, and `2 (TruePositive)`.
+* **Validation Strategy:** 80/20 train-test split with stratification.
+* **Feature Consistency:** A `features.json` schema is used by the FastAPI app to ensure the production API receives the exact same column order as the training phase.
 
 ## 🛠️ Tech Stack
 - **Language:** Python 3.9
