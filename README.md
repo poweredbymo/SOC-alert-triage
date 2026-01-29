@@ -2,9 +2,15 @@
 **Predicting False Positives to Reduce Alert Fatigue**
 
 ## 📌 Project Overview
-Security Operations Centers (SOCs) are overwhelmed by thousands of alerts daily. To manage and respond effectively, they need alerts that are accurate and actionable. False positives not only exhaust analysts but also risk diverting their attention away from genuine threats, reducing the overall security posture of the organization.
+Security Operations Centers (SOCs) are plagued by alert fatigue. This project provides a production-ready solution to triage high volumes of security incidents using the Microsoft GUIDE dataset.
 
-This project uses the **Microsoft GUIDE dataset** to build a Machine Learning model that classifies incidents as `True Positive`, `False Positive`, or `Benign Positive`.
+Instead of just a static notebook, this repository features a deployed Machine Learning API that classifies alerts into three categories:
+
+  True Positive (TP): Real threats requiring immediate action.
+
+  False Positive (FP): Benign activity misidentified as a threat.
+
+  Benign Positive (BP): Expected behavior that triggered an alert.
 
 By accurately triaging alerts, we can help security analysts focus on real threats and ignore the "noise."
 
@@ -16,16 +22,43 @@ The dataset contains millions of security events. Key steps taken in this projec
 
 ## 🛠️ Tech Stack
 - **Language:** Python 3.9
-- **Libraries:** Pandas, NumPy, Matplotlib, Seaborn, Scikit-Learn
-- **Environment:** Jupyter Notebook / Anaconda
+- **Libraries:** Pandas, NumPy, Matplotlib, Seaborn, Scikit-Learn, XGBoost
+- **API Development:** FastAPI, Pydantic (Schema validation & Endpoint logic)
+- **DevOps:** Docker
+- **Testing:** cURL & Swagger UI (API verification)
 
 ## 📂 Project Structure
-- `notebooks/`: Contains the Exploratory Data Analysis (EDA) and model prototyping.
-- `data/`: (Local only) Folder for storing the Large CSV files.
-- 'models/': Contains the exported train model and requirements.txt file 
+* `app.py`: The FastAPI communication layer.
+* `models/`: Serialized model files (`.pkl`) and feature definitions.
+* `notebooks/`: Exploratory Data Analysis and model selection.
+* `Dockerfile`: The recipe for the isolated Linux-based environment.
+* `requirements.txt`: Precise library versions for reproducibility.
 
-## 🚀 How to Run
-1. **Clone the repo:** `git clone https://github.com/YOUR_USERNAME/security.git`
-2. **Download Data:** Get the `GUIDE_Train.csv` from [Kaggle](https://www.kaggle.com/datasets/microsoft/ai4cyber-guide-dataset).
-3. **Setup Folder:** Place the CSV in a `/data` folder.
-4. **Run Notebook:** Open `notebooks/incident_triage.ipynb` in Jupyter.
+## 🚀 Deployment & Usage
+
+This project is containerized using **Docker** for consistent deployment across environments.
+
+### Running with Docker
+1. **Build the image:**
+   ```bash
+   docker build -t alert-triage-api .
+2. **Run the container:**
+   docker run -p 8000:8000 alert-triage-api
+3. **Input alert features through UI:**
+   Once the container is running, open your browser to: http://localhost:8000/docs
+   You can use the Swagger UI to manually input alert features and see the model's confidence scores in real-time.
+4. **Verify with a request (cURL):**
+   You can send alerts directly to the API using curl:
+   ''' curl -X 'POST' 'http://localhost:8000/predict' \
+     -H 'Content-Type: application/json' \
+     -d '{"features": {"DetectorId": 3, "hour": 14, "dow": 2, "is_weekend": 0, "OSFamily": 1, "CountryCode": 5}}' '''
+
+   Expected Response: {"prediction":"TruePositive","confidence":0.89, ...}
+
+## 📊 Impact & Future Work
+
+By automating the triage of alerts, this system allows SOC analysts to:
+
+* **Filter Noise:** Ignore alerts with high False Positive probability.
+* **Accelerate Response:** Focus on alerts with >85% True Positive confidence.
+* **V2 Roadmap:** Implement automated retraining loops and integrate with real-world SIEM logs.
