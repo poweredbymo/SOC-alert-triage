@@ -60,7 +60,7 @@ The goal was to find a model that balanced high precision (to avoid missing real
 | :--- | :--- | :--- |
 | **Logistic Regression** | Baseline for linear separability. | High speed, but struggled with complex patterns. |
 | **Random Forest** | To handle non-linear relationships. | Strong accuracy, but large model size. |
-| **XGBoost** | Gradient boosting for peak performance. | **Winner:** Best F1-score and efficiency. |
+| **XGBoost** | Gradient boosting for peak performance. Recommended to handle millions of examples | **Winner:** Best F1-score and efficiency. |
 
 ### Hyperparameter Tuning (GridSearchCV)
 To prevent overfitting and ensure the model generalized well to unseen security data, I performed a **Grid Search** over the following parameters:
